@@ -1,6 +1,7 @@
 #type reset
 import os
 import curses
+import time
 from curses import wrapper
 stdscr = curses.initscr()
 #curses.noecho()
@@ -24,19 +25,8 @@ with open('s1') as file:
     name = file.name
 
 splitLines = lines.split(". ")
- 
-#def teardown(): #taken care of by wrapper
-#    curses.nocbreak()
-#    stdscr.keypad(False)
-#    curses.echo()
-#    curses.endwin()
-#ne = True
-#def quitCurses(stdscr):
-#    curses.endwin()
-#    stdscr.addstr(f"Quitting")
-#    time.sleep(0.5)
-#    ne = False
-    
+
+
 def main(stdscr,splitLines=splitLines,y=y,x=x):
     lineNumber = 0
     while True:
@@ -64,38 +54,5 @@ def main(stdscr,splitLines=splitLines,y=y,x=x):
             stdscr.addstr(int(y/2),4,splitLines[lineNumber] + ".")
         else:
             stdscr.addstr("Not Mapped!")
-#    c = stdscr.getch()
-##    stdscr.clear()
-##    if c == 27:
-##        curses.addstr("yo esc")
-##
-#def main(stdscr):
-#    # Make stdscr.getch non-blocking
-#    stdscr.nodelay(True)
-#    stdscr.clear()
-#    width = 4
-#    count = 0
-#    direction = 1
-#    while True:
-#        c = stdscr.getch()
-#        # Clear out anything else the user has typed in
-#        curses.flushinp()
-#        stdscr.clear()
-#        # If the user presses p, increase the width of the springy bar
-#        if c == ord('p'):
-#            width += 1
-#        # Draw a springy bar
-#        stdscr.addstr("#" * count)
-#        count += direction
-#        if count == width:
-#            direction = -1
-#        elif count == 0:
-#            direction = 1
-#        # Wait 1/10 of a second. Read below to learn about how to avoid
-#        # problems with using time.sleep with getch!
-#        time.sleep(0.1)
-
-
-
 #if __name__ == ' __main__':
 wrapper(main)
