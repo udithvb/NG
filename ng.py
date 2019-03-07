@@ -1,4 +1,5 @@
 #type reset
+from sys import argv
 import os
 import curses
 import time
@@ -17,10 +18,12 @@ stdscr.addstr(3,24,"██║   ██║██████╔╝    ██║�
 stdscr.addstr(4,24,"╚██╗ ██╔╝██╔══██╗    ██║██║╚██╗██║██║        ")
 stdscr.addstr(5,24," ╚████╔╝ ██████╔╝    ██║██║ ╚████║╚██████╗██╗")
 stdscr.addstr(6,24,"  ╚═══╝  ╚═════╝     ╚═╝╚═╝  ╚═══╝ ╚═════╝╚═╝")
+
+script,filename = argv
                                                                               
 
 
-with open('s1') as file:
+with open(filename) as file:
     lines = ' '.join([line.rstrip('\n') for line in file])
     name = file.name
 
