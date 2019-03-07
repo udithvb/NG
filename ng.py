@@ -11,13 +11,6 @@ y,x = stdscr.getmaxyx()
 #x = int(x/2)
 #y = int(y/2)
 #stdscr.addstr(str(y) + " " + str(x))
-stdscr.addstr(1,24,"██╗   ██╗██████╗     ██╗███╗   ██╗ ██████╗   ")
-stdscr.addstr(2,24,"██║   ██║██╔══██╗    ██║████╗  ██║██╔════╝   ")
-stdscr.addstr(3,24,"██║   ██║██████╔╝    ██║██╔██╗ ██║██║        ")
-stdscr.addstr(4,24,"╚██╗ ██╔╝██╔══██╗    ██║██║╚██╗██║██║        ")
-stdscr.addstr(5,24," ╚████╔╝ ██████╔╝    ██║██║ ╚████║╚██████╗██╗")
-stdscr.addstr(6,24,"  ╚═══╝  ╚═════╝     ╚═╝╚═╝  ╚═══╝ ╚═════╝╚═╝")
-
 script,filename = argv
                                                                               
 
@@ -27,13 +20,26 @@ with open(filename) as file:
     name = file.name
 
 splitLines = lines.split(". ")
-
 start = time.time()
+end = 0
+log_list = list()
+
+for i in range(len(splitLines)):
+    log_list.append(" ")
+
+stdscr.addstr(1,24,"██╗   ██╗██████╗     ██╗███╗   ██╗ ██████╗   ")
+stdscr.addstr(2,24,"██║   ██║██╔══██╗    ██║████╗  ██║██╔════╝   ")
+stdscr.addstr(3,24,"██║   ██║██████╔╝    ██║██╔██╗ ██║██║        ")
+stdscr.addstr(4,24,"╚██╗ ██╔╝██╔══██╗    ██║██║╚██╗██║██║        ")
+stdscr.addstr(5,24," ╚████╔╝ ██████╔╝    ██║██║ ╚████║╚██████╗██╗")
+stdscr.addstr(6,24,"  ╚═══╝  ╚═════╝     ╚═╝╚═╝  ╚═══╝ ╚═════╝╚═╝")
+stdscr.addstr(7,24,f"{len(splitLines)}")
 
 def main(stdscr,splitLines=splitLines,y=y,x=x):
+    global log_list
     lineNumber = 0
+    prev = time.time()
     while True:
-        #stdscr.move(y,x)
         curses.flushinp()
 
         # Store the key value in the variable `c`
@@ -41,16 +47,16 @@ def main(stdscr,splitLines=splitLines,y=y,x=x):
         # Clear the terminal
         stdscr.clear()
         if c== ord('q') or c == 27 or c == ord('Q'):
-            #stdscr.addstr(0,x,"You pressed the 'q' key.")
-            #time.sleep(0.5)
-            #curses.endwin()
-            #stdscr.addstr(f"{curses.isendwin()}")
-            nonlocal end = start - time.time()
+            global end
+            end = abs(start - time.time())
             break
-            #ne = False
-            #quitCurses()
         elif c == ord('j') or c == ord('l'): #or c == KEY_RIGHT:
             lineNumber += 1 #next line
+            try:
+                log_list[lineNumber] = abs(prev - time.time())
+            except:
+                break
+            prev = time.time()
             stdscr.addstr(int(y/2),4,splitLines[lineNumber] + ".")
             
         elif c == ord('k') or c == ord('h'):
@@ -62,4 +68,13 @@ def main(stdscr,splitLines=splitLines,y=y,x=x):
 #if __name__ == ' __main__':
 wrapper(main)
 try:
-    with open(
+    open(f"log_{filename}",'x')
+except FileExistsError:
+    print("file exists, appending")
+
+with open(f"log_{filename}",'a') as logfile:
+    for i in range(len(log_list)):
+        logfile.write(str(log_list[i]) + "\n")
+
+    logfile.write(str(end) + "\n")
+    logfile.write("********************\n")
