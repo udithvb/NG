@@ -1,6 +1,5 @@
 #type reset
 from sys import argv
-import os
 import curses
 import time
 from curses import wrapper
@@ -29,6 +28,7 @@ with open(filename) as file:
 
 splitLines = lines.split(". ")
 
+start = time.time()
 
 def main(stdscr,splitLines=splitLines,y=y,x=x):
     lineNumber = 0
@@ -45,6 +45,7 @@ def main(stdscr,splitLines=splitLines,y=y,x=x):
             #time.sleep(0.5)
             #curses.endwin()
             #stdscr.addstr(f"{curses.isendwin()}")
+            nonlocal end = start - time.time()
             break
             #ne = False
             #quitCurses()
@@ -57,5 +58,8 @@ def main(stdscr,splitLines=splitLines,y=y,x=x):
             stdscr.addstr(int(y/2),4,splitLines[lineNumber] + ".")
         else:
             stdscr.addstr("Not Mapped!")
+#            pass
 #if __name__ == ' __main__':
 wrapper(main)
+try:
+    with open(
