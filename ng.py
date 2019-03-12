@@ -37,6 +37,9 @@ stdscr.addstr(7,24,f"{len(splitLines)}")
 stdscr.addstr(8,24,str(type(splitLines)))
 stdscr.addstr(9,24,str(len(splitLines)))
 
+
+    
+
 def main(stdscr,splitLines=splitLines,y=y,x=x):
     global log_list
     global end
