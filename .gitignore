@@ -1,3 +1,4 @@
 *.txt
 *.zip
 *.swp
+!ng_sub.zip
